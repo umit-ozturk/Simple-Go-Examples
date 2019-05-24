@@ -26,6 +26,10 @@ func allArticles(w http.ResponseWriter, r *http.Request)  {
 	
 }
 
+func testPostArticle(w http.ResponseWriter, r *http.Request)  {
+	fmt.Fprint(w, "Test Article Post Endpoint")
+}
+
 func homePage(w http.ResponseWriter, r *http.Request)  {
 	fmt.Fprint(w, "Home Endpoint Hit.")
 }
@@ -35,7 +39,8 @@ func handleRequest()  {
 	myRouter := mux.NewRouter().StrictSlash(true)
 
 	myRouter.HandleFunc("/", homePage)
-	myRouter.HandleFunc("/articles", allArticles)
+	myRouter.HandleFunc("/articles", allArticles).Methods("GET")
+	myRouter.HandleFunc("/articles", testPostArticle).Methods("POST")
 	log.Fatal(http.ListenAndServe(":8001", myRouter))
 }
 
